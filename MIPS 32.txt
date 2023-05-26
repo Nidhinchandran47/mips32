@@ -1,0 +1,97 @@
+ ____________      MIPS 32       ____________
+|                                            |
+| instruction fetch               IF         |
+| instruction decode              ID         |
+| execution                       EX         |
+| memory write                    MEM        |
+| write back                      WB         |
+|____________________________________________|
+
+program counter                 PC              size        32
+
+                 --intermediate register--
+
+        --Between fetch and decode stage--
+
+insctraction register between  IF and ID         32        IF_ID_IR
+temp. program counter between IF and ID          32        IF_ID_NPC
+
+        --Between decode and execuition stage--
+
+insctraction register between  ID and EX         32        ID_EX_IR
+temp. program counter between ID and EX          32        ID_EX_NPC
+A register between ID and EX for ALU oprtation   32        ID_EX_A
+B register between ID and EX for ALU oprtation   32        ID_EX_B
+immediate data register between ID and EX        32        ID_EX_Imm
+
+  //A and B are the input to the ALU in next (execution) stage//
+
+
+        --Between execuition and memory write stage--
+
+insctraction register between EX and MEM         32        EX_MEM_IR
+ALU output                                       32        EX_MEM_ALUout
+B register between EX and MEM stage              32        EX_MEM_B
+Condition register between EX and MEM             1        EX_MEM_cond
+
+        --Between memory write and write back stage--
+
+insctraction register between MEM and WB         32        MEM_WB_IR
+ALU output                                       32        MEM_WB_ALUout
+Load memory Data                                 32        MEM_WB_LMD
+
+
+
+                 -- Memory --
+
+genaral porpose registers           R0 - R31     32X32    reg
+External memory                     4GB (8X4GB)  32X1023  Mem
+
+
+instruction type between ID and EX               3        ID_EX_type
+instruction type between EX and MEM              3        EX_MEM_type
+instruction type between MEM and WB              3        MEM_WB_type
+
+                
+REGISTER REGISTER ALU OPERATION        RR_ALU             000
+REGISTER MEMORY ALU OPERATION          RM_ALU             001
+LOAD FROM MEMORY OPERATION             LOAD               010
+STORE TO MEMORY OPERATION              STORE              011
+HALT                                   HALT               101
+
+
+--------------------- PARAMETERS ---------------------------
+
+ADD                                   h 00
+SUB                                   h 01
+AND                                   h 02
+OR                                    h 03
+STL                                   h 04
+MUL                                   h 05
+NND                                   h 06
+NOR                                   h 07
+XOR                                   h 08
+XNR                                   h 09
+LW                                    h 10
+SW                                    h 11
+AD1                                   h 12
+SUI                                   h 13
+STI                                   h 14
+HLT                                   h 3F
+
+
+-------------------INSTRUCTION REGISTER ------------------
+
+ |  OPCODE  |      RS     |     RT     |     RD    |     XX     |  
+  31------26 25---------21 20--------16 15-------11 10---------0  
+  
+
+   JMP            RS
+
+   JPI            x             x          Imm
+
+   BIF            x             x          Imm
+
+   BNF            x             x          Imm
+
+
